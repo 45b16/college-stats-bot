@@ -86,8 +86,8 @@ bot.on("message", function(message) {
               .setTitle("First US news search result for " + college)
               .setColor(0x323D7F)
               .setDescription(`No valid search results found at ${link}. `
-								+ `This bot only pulls from US News's list of National `
-								+ `Universities.`)
+		+ `This bot only pulls from US News's list of National `
+		+ `Universities.`)
               .setTimestamp());
             }
             // Takes url of the first college in the search results and does an
