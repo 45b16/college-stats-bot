@@ -31,7 +31,8 @@ bot.on("message", function(message) {
     .setColor(0x323D7F)
     .setDescription("Just type '-college <name of university>' without the "
       + "quotes to get a link to its statistics page. For example, '-college "
-      + "princeton' will return a link to Princeton's statistics.")
+      + "princeton' will return a link to Princeton's statistics. You can see "
+      + "the code at https://github.com/45b16/college-stats-bot.")
     .setTimestamp());
   }
   // Command -college <insert college> results in bot sending a link to search
@@ -89,6 +90,7 @@ bot.on("message", function(message) {
 		+ `This bot only pulls from US News's list of National `
 		+ `Universities.`)
               .setTimestamp());
+              console.log("None found\n");
             }
             // Takes url of the first college in the search results and does an
             // HTTP request to get more information
@@ -146,6 +148,7 @@ bot.on("message", function(message) {
                     .addField("National Universities Ranking", info.ranking)
                     .addField("College Statistics", info.stats)
                     .setTimestamp());
+		    console.log(info.name + "\n");
                   }
               });
             }
