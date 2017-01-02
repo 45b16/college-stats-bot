@@ -62,7 +62,7 @@ bot.on("message", function(message) {
     // Gets US News National Universities search link and does an
     // HTTP GET request on it with headers
     var link = `http://colleges.usnews.rankingsandreviews.com/best-colleges`
-      +`/rankings/national-universities?school-name=${college2}&_mode=list`;
+      +`/search?school-name=${college2}&_mode=list`;
     Request({
         uri: link,
         headers: {
@@ -87,8 +87,7 @@ bot.on("message", function(message) {
               .setTitle("First US news search result for " + college)
               .setColor(0x323D7F)
               .setDescription(`No valid search results found at ${link}. `
-		+ `This bot only pulls from US News's list of National `
-		+ `Universities.`)
+		+ `This bot only pulls from US News's list of 1,817 colleges.`)
               .setTimestamp());
               console.log("None found\n");
             }
