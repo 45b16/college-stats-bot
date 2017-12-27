@@ -1,6 +1,9 @@
 const Discord = require("discord.js");
 const Request = require("request");
 const Cheerio = require("cheerio");
+
+// Need .json file in the directory storing a user agent for web scraping
+// and the Discord token to log the bot in with
 const Tokens = require("./tokens.json");
 
 const bot = new Discord.Client();
@@ -32,28 +35,14 @@ bot.on("message", function(message) {
     .setDescription("Just type '-college <name of university>' without the "
       + "quotes to get a link to its statistics page. For example, '-college "
       + "princeton' will return a link to Princeton's statistics. You can see "
-      + "the code at https://github.com/45b16/college-stats-bot.")
+      + "the code at https://github.com/abhinavk99/CollegeBot.")
     .setTimestamp());
   }
   // Command -college <insert college> results in bot sending a link to search
   // results and basic stats of the college
   else if (input.startsWith(prefix + "college ")) {
-    // Logs the time that the -stats message was sent
-    var hours = message.createdAt.getHours().toString();
-    var minutes = message.createdAt.getMinutes().toString();
-    var seconds = message.createdAt.getSeconds().toString();
-    if (hours.length < 2) {
-      hours = "0" + hours;
-    }
-    if (minutes.length < 2) {
-      minutes = "0" + minutes;
-    }
-    if (seconds.length < 2) {
-      seconds = "0" + seconds;
-    }
-    console.log(`${message.guild.name} - ${message.channel.name}`);
-    console.log(`${hours}:${minutes}:${seconds} `
-      + `- ${message.author.username}: ${message.content}\n`);
+    // Logs information about the message
+    infoLogger(message);
 
     // Gets college name to search for
     var college = input.substring(9);
@@ -87,8 +76,8 @@ bot.on("message", function(message) {
               .setTitle("First US news search result for " + college)
               .setColor(0x323D7F)
               .setDescription(`No valid search results found at ${link}. `
-		+ `This bot only pulls from US News's list of National `
-		+ `Universities.`)
+		            + `This bot only pulls from US News's list of National `
+		            + `Universities.`)
               .setTimestamp());
               console.log("None found\n");
             }
@@ -148,7 +137,7 @@ bot.on("message", function(message) {
                     .addField("National Universities Ranking", info.ranking)
                     .addField("College Statistics", info.stats)
                     .setTimestamp());
-		    console.log(info.name + "\n");
+		                console.log(info.name + "\n");
                   }
               });
             }
@@ -163,9 +152,30 @@ bot.on("message", function(message) {
 bot.on('error', function(e) {
     console.error(e);
 });
+
 bot.on('warn', function(w) {
     console.warn(w);
 });
 
 // Bot logs in with token
 bot.login(Tokens.discordToken);
+
+// logs information about the command
+function infoLogger(message) {
+  // Logs the time that the -stats message was sent
+  var hours = message.createdAt.getHours().toString();
+  var minutes = message.createdAt.getMinutes().toString();
+  var seconds = message.createdAt.getSeconds().toString();
+  if (hours.length < 2) {
+    hours = "0" + hours;
+  }
+  if (minutes.length < 2) {
+    minutes = "0" + minutes;
+  }
+  if (seconds.length < 2) {
+    seconds = "0" + seconds;
+  }
+  console.log(`${message.guild.name} - ${message.channel.name}`);
+  console.log(`${hours}:${minutes}:${seconds} `
+    + `- ${message.author.username}: ${message.content}\n`);
+}
